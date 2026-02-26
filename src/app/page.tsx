@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import {
   AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
@@ -17,6 +17,8 @@ const DEPT_COLORS = ['#6366f1', '#ec4899', '#10b981', '#f59e0b', '#3b82f6', '#8b
 
 export default function DashboardPage() {
   const [exporting, setExporting] = useState<string | null>(null)
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
 
   const deptCounts = employees.reduce((acc, emp) => {
     acc[emp.department] = (acc[emp.department] || 0) + 1
@@ -107,6 +109,7 @@ export default function DashboardPage() {
               <CardDescription>Monthly hires and departures over the past 12 months</CardDescription>
             </CardHeader>
             <CardContent>
+              {mounted && (
               <ResponsiveContainer width="100%" height={280}>
                 <AreaChart data={hiringTrends} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
                   <defs>
@@ -128,6 +131,7 @@ export default function DashboardPage() {
                   <Area type="monotone" dataKey="departures" stroke="#ec4899" strokeWidth={2} fill="url(#colorDepartures)" name="Departures" />
                 </AreaChart>
               </ResponsiveContainer>
+              )}
             </CardContent>
           </Card>
 
@@ -137,6 +141,7 @@ export default function DashboardPage() {
               <CardDescription>Employee performance scores breakdown</CardDescription>
             </CardHeader>
             <CardContent>
+              {mounted && (
               <ResponsiveContainer width="100%" height={280}>
                 <PieChart>
                   <Pie
@@ -156,6 +161,7 @@ export default function DashboardPage() {
                   <Legend iconType="circle" iconSize={8} />
                 </PieChart>
               </ResponsiveContainer>
+              )}
             </CardContent>
           </Card>
         </div>
@@ -166,6 +172,7 @@ export default function DashboardPage() {
             <CardDescription>Current employee distribution across departments</CardDescription>
           </CardHeader>
           <CardContent>
+            {mounted && (
             <ResponsiveContainer width="100%" height={260}>
               <BarChart data={deptData} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
@@ -179,6 +186,7 @@ export default function DashboardPage() {
                 </Bar>
               </BarChart>
             </ResponsiveContainer>
+            )}
           </CardContent>
         </Card>
       </div>
