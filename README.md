@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# HR & Workspace Hub
+
+A modern, executive-ready HR management and workspace collaboration platform built with Next.js 14.
+
+## Features
+
+- **HR Analytics Dashboard** — KPI cards, hiring trends chart, department headcount bar chart, performance distribution pie chart
+- **Employee Directory** — Searchable/filterable table with 15 mock employees, performance scores, status badges
+- **Project Workspaces** — Workspace cards with progress tracking, task lists, create new workspace modal
+- **Report Builder** — Drag-and-drop report section builder
+- **Settings** — Light/dark/system theme toggle and profile settings
+- **Export** — One-click Excel export (xlsx) and PowerPoint export (pptxgenjs)
+
+## Tech Stack
+
+- **Next.js 14** with TypeScript, App Router, `src/` directory
+- **Tailwind CSS** with CSS variables for theming
+- **shadcn-style UI components** (Radix UI primitives)
+- **Recharts** for interactive charts
+- **next-themes** for dark/light mode
+- **@dnd-kit** for drag-and-drop
+- **lucide-react** for icons
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the app.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+You can start editing the dashboard by modifying `src/app/page.tsx`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Pages
 
-## Learn More
+| Route | Description |
+|-------|-------------|
+| `/` | HR Analytics Dashboard |
+| `/employees` | Employee Directory |
+| `/workspaces` | Project Workspaces |
+| `/report-builder` | Report Builder |
+| `/settings` | Settings |
 
-To learn more about Next.js, take a look at the following resources:
+## Build
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run build
+```
