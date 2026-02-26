@@ -1,28 +1,54 @@
-import * as XLSX from 'xlsx';
+import ExcelJS from 'exceljs';
 import type PptxGenJSType from 'pptxgenjs';
 import { employees } from './mock-data';
 
-export function exportEmployeesToExcel() {
-  const data = employees.map(emp => ({
-    'ID': emp.id,
-    'Name': emp.name,
-    'Email': emp.email,
-    'Department': emp.department,
-    'Role': emp.role,
-    'Salary': emp.salary,
-    'Performance Score': emp.performance,
-    'Status': emp.status,
-    'Join Date': emp.joinDate,
-  }));
+export async function exportEmployeesToExcel() {
+  const workbook = new ExcelJS.Workbook();
+  const worksheet = workbook.addWorksheet('Employees');
 
-  const worksheet = XLSX.utils.json_to_sheet(data);
-  const workbook = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(workbook, worksheet, 'Employees');
+  worksheet.columns = [
+    { header: 'ID', key: 'id', width: 10 },
+    { header: 'Name', key: 'name', width: 22 },
+    { header: 'Email', key: 'email', width: 28 },
+    { header: 'Department', key: 'department', width: 18 },
+    { header: 'Role', key: 'role', width: 24 },
+    { header: 'Salary', key: 'salary', width: 14 },
+    { header: 'Performance Score', key: 'performance', width: 20 },
+    { header: 'Status', key: 'status', width: 12 },
+    { header: 'Join Date', key: 'joinDate', width: 14 },
+  ];
 
-  const colWidths = Object.keys(data[0]).map(key => ({ wch: Math.max(key.length, 15) }));
-  worksheet['!cols'] = colWidths;
+  // Style header row
+  worksheet.getRow(1).font = { bold: true, color: { argb: 'FFFFFFFF' } };
+  worksheet.getRow(1).fill = {
+    type: 'pattern', pattern: 'solid',
+    fgColor: { argb: 'FF6366F1' },
+  };
 
-  XLSX.writeFile(workbook, 'employees-export.xlsx');
+  employees.forEach(emp => {
+    worksheet.addRow({
+      id: emp.id,
+      name: emp.name,
+      email: emp.email,
+      department: emp.department,
+      role: emp.role,
+      salary: emp.salary,
+      performance: emp.performance,
+      status: emp.status,
+      joinDate: emp.joinDate,
+    });
+  });
+
+  const buffer = await workbook.xlsx.writeBuffer();
+  const blob = new Blob([buffer], {
+    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'employees-export.xlsx';
+  a.click();
+  URL.revokeObjectURL(url);
 }
 
 export async function exportDashboardToPowerPoint() {

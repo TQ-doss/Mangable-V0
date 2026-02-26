@@ -9,7 +9,7 @@ export default function ExportButton() {
   const [loading, setLoading] = useState(false)
   const handleExport = async () => {
     setLoading(true)
-    try { exportEmployeesToExcel() } finally { setLoading(false) }
+    try { await exportEmployeesToExcel() } finally { setLoading(false) }
   }
   return (
     <Button variant="outline" size="sm" onClick={handleExport} disabled={loading}>

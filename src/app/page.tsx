@@ -40,7 +40,7 @@ export default function DashboardPage() {
 
   const handleExcelExport = async () => {
     setExporting('excel')
-    try { exportEmployeesToExcel() } finally { setExporting(null) }
+    try { await exportEmployeesToExcel() } finally { setExporting(null) }
   }
 
   const handlePPTExport = async () => {
